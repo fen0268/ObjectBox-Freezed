@@ -13,7 +13,8 @@ class HomePage extends ConsumerWidget {
     final model = ref.watch(userStateNotifierProvider);
     final notifier = ref.watch(userStateNotifierProvider.notifier);
     final userBox = store.box<User>();
-    final fetchUserBoxId = userBox.getAll().last.id;
+    final fetchUserBoxId =
+        userBox.getAll().isEmpty ? 0 : userBox.getAll().last.id;
 
     void addUser() {
       final newUser = User(
