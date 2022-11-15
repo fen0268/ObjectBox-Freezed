@@ -10,7 +10,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(userStateNotifierProvider);
+    final data = ref.watch(userStateNotifierProvider);
     final notifier = ref.watch(userStateNotifierProvider.notifier);
     final userBox = store.box<User>();
     final fetchUserBoxId =
@@ -55,7 +55,7 @@ class HomePage extends ConsumerWidget {
             const Text('データ全体'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: notifier.userBox
+              children: userBox
                   .getAll()
                   .map(
                     (e) => Text('ID: ${e.id}, name: ${e.name}'),

@@ -26,8 +26,8 @@ class UserStateNotifier extends StateNotifier<User> {
 
   ///追加メソッド
   void putUser(User user) {
-    state = User(id: user.id, name: user.name);
-    userBox.put(state);
+    state = state.copyWith(id: user.id, name: user.name);
+    userBox.put(user);
   }
 
   ///全部削除メソッド
