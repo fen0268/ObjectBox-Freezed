@@ -28,14 +28,6 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ObjectBox'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              notifier.removeUser();
-            },
-            icon: const Icon(Icons.delete),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,13 +44,20 @@ class HomePage extends ConsumerWidget {
               child: const Text('ユーザーを追加する'),
             ),
             const SizedBox(height: 16),
-            const Text('データ全体'),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: userBox
                   .getAll()
                   .map(
-                    (e) => Text('ID: ${e.id}, name: ${e.name}'),
+                    (e) => ListTile(
+                      title: Text('ID: ${e.id}, name: ${e.name}'),
+                      trailing: IconButton(
+                        onPressed: () {
+                          notifier.removeUser(e.id);
+                        },
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ),
                   )
                   .toList(),
             ),

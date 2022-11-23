@@ -30,8 +30,9 @@ class UserStateNotifier extends StateNotifier<User> {
     userBox.put(user);
   }
 
-  ///全部削除メソッド
-  void removeUser() {
-    userBox.removeAll();
+  ///削除メソッド
+  void removeUser(int id) {
+    state = state.copyWith(id: id, name: '');
+    userBox.remove(state.id);
   }
 }
