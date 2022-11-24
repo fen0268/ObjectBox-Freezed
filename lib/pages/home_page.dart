@@ -10,18 +10,28 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// state を監視
     final data = ref.watch(userStateNotifierProvider);
+
+    /// controller を監視
     final notifier = ref.watch(userStateNotifierProvider.notifier);
     final userBox = store.box<User>();
+
+    /// 保存されている ID の中で一番大きな値を取得
+    /// 何も保存されてない場合は 0
     final fetchUserBoxId =
         userBox.getAll().isEmpty ? 0 : userBox.getAll().last.id;
 
     void addUser() {
       final newUser = User(
-        // 9223372036854775807 2^63 max値
+        /// 9223372036854775807 2^63 max値
+        /// 一番大きな ID + 1 で常に ID が被らないように実装
         id: fetchUserBoxId + 1,
+
+        /// controller の TextEditingController のテキスト
         name: notifier.controller.text,
       );
+      
       notifier.putUser(newUser);
     }
 
