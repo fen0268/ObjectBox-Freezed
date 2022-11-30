@@ -10,18 +10,16 @@ final userStateNotifierProvider =
 );
 
 class UserStateNotifier extends StateNotifier<User> {
-  UserStateNotifier() : super(User(id: store.box<User>().getAll().length + 1));
-  final controller = TextEditingController(); //
+  UserStateNotifier() : super(User(id: 0));
+  final nameController = TextEditingController(); 
+  /// User を取得
   final userBox = store.box<User>();
 
   @override
   void dispose() {
-    controller.dispose();
+    /// キャッシュクリア
+    nameController.dispose();
     super.dispose();
-  }
-
-  void fetchUserBoxId() {
-    userBox.getAll().length;
   }
 
   ///追加メソッド
@@ -32,7 +30,7 @@ class UserStateNotifier extends StateNotifier<User> {
 
   ///削除メソッド
   void removeUser(int id) {
-    state = state.copyWith(id: id, name: '');
+    state = state.copyWith(id: id);
     userBox.remove(state.id);
   }
 }

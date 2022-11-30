@@ -100,11 +100,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 
 @Entity(realClass: User)
 class _$_User implements _User {
-  _$_User({@Id(assignable: true) this.id = 0, this.name = ''});
+  _$_User({@Id(assignable: true) required this.id, this.name = ''});
 
   /// id に@Index() は使用できない?
   @override
-  @JsonKey()
   @Id(assignable: true)
   final int id;
   @override
@@ -136,8 +135,9 @@ class _$_User implements _User {
 }
 
 abstract class _User implements User {
-  factory _User({@Id(assignable: true) final int id, final String name}) =
-      _$_User;
+  factory _User(
+      {@Id(assignable: true) required final int id,
+      final String name}) = _$_User;
 
   @override
 

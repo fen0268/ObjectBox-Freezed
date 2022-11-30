@@ -3,15 +3,17 @@ import 'package:objectbox/objectbox.dart';
 
 part 'user.freezed.dart';
 
-/// idをインクリメントできるようにしたい => 上限2^32
-/// またはidを使わずにuuidを代わりに使いたい => 上限2^122
-
 @freezed
 class User with _$User {
   @Entity(realClass: User)
   factory User({
-    /// id に@Index() は使用できない?
+    
+    /// @Id() アノテーションで ID であることを明示する
+    /// assignable 自分で ID を割り当てる場合は true にしなければならない
+    /// Freezed の場合は自動インクリメントされないので true にしないと自動生成されない
     @Id(assignable: true) required int id,
+
+    /// UId
     @Default('') String name,
   }) = _User;
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_objectbox_riverpod_sample_app/features/user_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../features/user_controller.dart';
 import '../main.dart';
 import '../models/user.dart';
 
@@ -15,23 +15,22 @@ class HomePage extends ConsumerWidget {
 
     /// controller を監視
     final notifier = ref.watch(userStateNotifierProvider.notifier);
+
+    /// User を取得
     final userBox = store.box<User>();
 
     /// 保存されている ID の中で一番大きな値を取得
-    /// 何も保存されてない場合は 0
+    /// 何も保存されてない場合は 0 を取得
     final fetchUserBoxId =
         userBox.getAll().isEmpty ? 0 : userBox.getAll().last.id;
 
     void addUser() {
       final newUser = User(
-        /// 9223372036854775807 2^63 max値
-        /// 一番大きな ID + 1 で常に ID が被らないように実装
+        /// max値 9223372036854775807 2^63
+        /// 一番大きな id + 1 で常に id が被らないように実装
         id: fetchUserBoxId + 1,
-
-        /// controller の TextEditingController のテキスト
-        name: notifier.controller.text,
+        name: notifier.nameController.text,
       );
-      
       notifier.putUser(newUser);
     }
 
@@ -45,7 +44,7 @@ class HomePage extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(32),
               child: TextFormField(
-                controller: notifier.controller,
+                controller: notifier.nameController,
                 decoration: const InputDecoration(hintText: 'ユーザー名'),
               ),
             ),
