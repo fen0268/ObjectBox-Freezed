@@ -16,23 +16,8 @@ class HomePage extends ConsumerWidget {
     /// controller を監視
     final notifier = ref.watch(userStateNotifierProvider.notifier);
 
-    /// User を取得
+    /// Box を取得
     final userBox = store.box<User>();
-
-    /// 保存されている ID の中で一番大きな値を取得
-    /// 何も保存されてない場合は 0 を取得
-    final fetchUserBoxId =
-        userBox.getAll().isEmpty ? 0 : userBox.getAll().last.id;
-
-    void addUser() {
-      final newUser = User(
-        /// max値 9223372036854775807 2^63
-        /// 一番大きな id + 1 で常に id が被らないように実装
-        id: fetchUserBoxId + 1,
-        name: notifier.nameController.text,
-      );
-      notifier.putUser(newUser);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +34,7 @@ class HomePage extends ConsumerWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: addUser,
+              onPressed: () => notifier.putUser(),
               child: const Text('ユーザーを追加する'),
             ),
             const SizedBox(height: 16),

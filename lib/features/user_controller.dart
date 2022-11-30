@@ -11,8 +11,9 @@ final userStateNotifierProvider =
 
 class UserStateNotifier extends StateNotifier<User> {
   UserStateNotifier() : super(User(id: 0));
-  final nameController = TextEditingController(); 
-  /// User を取得
+  final nameController = TextEditingController();
+
+  /// Box を取得
   final userBox = store.box<User>();
 
   @override
@@ -23,9 +24,21 @@ class UserStateNotifier extends StateNotifier<User> {
   }
 
   ///追加メソッド
-  void putUser(User user) {
-    state = state.copyWith(id: user.id, name: user.name);
-    userBox.put(user);
+  void putUser() {
+    /// 保存されている ID の中で一番大きな値を取得
+    /// 何も保存されてない場合は 0 を取得
+    final fetchUserBoxId =
+        userBox.getAll().isEmpty ? 0 : userBox.getAll().last.id;
+
+    final newUser = User(
+      /// max値 9223372036854775807 2^63
+      /// 一番大きな id + 1 で常に id が被らないように実装
+      id: fetchUserBoxId + 1,
+      name: nameController.text,
+    );
+
+    state = state.copyWith(id: newUser.id, name: newUser.name);
+    userBox.put(state);
   }
 
   ///削除メソッド
