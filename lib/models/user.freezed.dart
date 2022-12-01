@@ -16,9 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$User {
-  /// id に@Index() は使用できない?
+  /// @Id() アノテーションで ID であることを明示する
+  /// assignable 自分で ID を割り当てる場合は true にしなければならない
+  /// Freezed の場合は自動インクリメントされないので true にしないと自動生成されない
   @Id(assignable: true)
   int get id => throw _privateConstructorUsedError;
+
+  /// UId
   String get name => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -102,10 +106,14 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 class _$_User implements _User {
   _$_User({@Id(assignable: true) required this.id, this.name = ''});
 
-  /// id に@Index() は使用できない?
+  /// @Id() アノテーションで ID であることを明示する
+  /// assignable 自分で ID を割り当てる場合は true にしなければならない
+  /// Freezed の場合は自動インクリメントされないので true にしないと自動生成されない
   @override
   @Id(assignable: true)
   final int id;
+
+  /// UId
   @override
   @JsonKey()
   final String name;
@@ -141,10 +149,14 @@ abstract class _User implements User {
 
   @override
 
-  /// id に@Index() は使用できない?
+  /// @Id() アノテーションで ID であることを明示する
+  /// assignable 自分で ID を割り当てる場合は true にしなければならない
+  /// Freezed の場合は自動インクリメントされないので true にしないと自動生成されない
   @Id(assignable: true)
   int get id;
   @override
+
+  /// UId
   String get name;
   @override
   @JsonKey(ignore: true)
